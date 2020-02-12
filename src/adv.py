@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -42,6 +43,8 @@ room['treasure'].s_to = room['narrow']
 # Write a loop that:
 #
 # * Prints the current room name
+current_room_name = print(f"You are in {}")
+
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 #
