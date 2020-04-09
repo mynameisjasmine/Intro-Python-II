@@ -11,18 +11,27 @@ import textwrap
 #     that are currently in that room.
 
 class Room:
-    def __init__(self, room_name, description, items=[]):
+    def __init__(self, room_name, description, items=None):
         self.room_name = room_name
         self.description = description
-        self.items = items
+        if items is None:
+            self.items = []
+        else:
+            self.items = items
         self.n_to = None
         self.s_to = None
         self.e_to = None
         self.w_to = None
         
+    def get_room_items(self):
+        if len(self.items) >= 1:
+            print('This room contains: ')
+            for room_item in self.items:
+                print(room_item)
 
 
-         
+        else:
+             print('This room has no items in it')
 
 
 

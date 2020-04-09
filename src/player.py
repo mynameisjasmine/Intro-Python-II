@@ -12,9 +12,9 @@ class Player:
             return f" Name: {self.name}, {self.current_room}"
 
     def get_inventory(self):
-        print('You have a ')
+        print('You are carrying: ')
         for added_item in self.player_items:
-            print(added_item.item_name)
+            print(added_item)
 
 
 # pl = Player('Damon')

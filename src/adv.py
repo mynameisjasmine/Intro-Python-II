@@ -20,14 +20,14 @@ room = {
                     ),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", [Item('flashlight', 'this flashlight can help you see in dark rooms')]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm."""),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", [Item('crystal ball', 'a glowing crystal that lights up')]),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
@@ -70,6 +70,8 @@ flail_item = room['outside'].items[0]
 sword_item = room['outside'].items[1]
 hammer_item = room['outside'].items[2]
 
+# items_inventory = player_one.current_room.items[0:]
+
 
   
  
@@ -95,20 +97,21 @@ hammer_item = room['outside'].items[2]
 #Player gets to choose if they want to take a weapon
 print('Your current location is:', player_one.current_room, item_randomizer)
 armed = input('Would you like to take this weapon? --->')
-    
+
+
 if armed in ['y']:
         if item_randomizer == room['outside'].items[0]:
                
-               print('You have chosen to take the flail. Do remember that, ',room['outside'].items[0].item_description)
+               print('You have chosen to take the flail. Do remember that,',flail_item.item_description)
 
         elif item_randomizer == room['outside'].items[1]:
             # player_one.player_items = room['outside'].items[1]
             player_one.player_items.append(player_one.current_room.items[1])
-            print('You have chosen to take the sword. Do remember that, ',room['outside'].items[1].item_description)
+            print('You have chosen to take the sword. Do remember that,',sword_item.item_description)
 
         elif item_randomizer == room['outside'].items[2]:
             
-            print('You have chosen to take the hammer. Do remember that, ',room['outside'].items[2].item_description)
+            print('You have chosen to take the hammer. Do remember that,',hammer_item.item_description)
 
         else:
             print('Please enter either y or n')
@@ -117,9 +120,14 @@ if armed in ['y']:
 if armed in ['n']:
         print('You have chosen to continue unarmed...good luck!')
 
+if armed == 'q':
+        print('Goodbye')
+        exit()
 
 while True:
-    print('Your current location is:', player_one.current_room, item_randomizer)
+    # print('Your current location is:', player_one.current_room, item_randomizer)
+    print('Your current location is:', player_one.current_room.room_name)
+
     
     player_input = input('Which direction would you like to move in? -->')
     if player_input in ['n', 's', 'e', 'w']:
@@ -127,33 +135,65 @@ while True:
         print('move ' + player_input)
         if player_input == 'n':
             if player_one.current_room.n_to is not None and item_randomizer == flail_item:
-                player_one.current_room = player_one.current_room.n_to
-                room['foyer'].items.append(room['outside'].items[0].item_name)
-                print('The array list items in foyer:', room['foyer'].items[0:])
+                if 'flail' not in player_one.player_items:
+                    player_one.current_room = player_one.current_room.n_to
+                    # Append the chosen weapon to the player items array
+                    player_one.player_items.append(flail_item.item_name)
+                    
+                    # Get a list of any weapons hidden in the current room
+                    player_one.current_room.get_room_items()
+
+                elif 'flail' in player_one.player_items:
+                    player_one.current_room = player_one.current_room.n_to
+                    player_one.current_room.get_room_items()
+
+
+                
+
+
                 
             elif player_one.current_room.n_to is not None and item_randomizer == sword_item:
-                player_one.current_room = player_one.current_room.n_to
-                # room['foyer'].items.append('sword')
-                room['foyer'].items.append(room['outside'].items[1].item_name)
-                print('The array list:', room['foyer'].items[0:])
+                if 'sword' not in player_one.player_items:
+                    player_one.current_room = player_one.current_room.n_to
+                    # Append the chosen weapon to the player items array
+                    player_one.player_items.append(sword_item.item_name)
+                    
+                    # Get a list of any weapons hidden in the current room
+                    player_one.current_room.get_room_items()
+
+                elif 'sword' in player_one.player_items:
+                    player_one.current_room = player_one.current_room.n_to
+                    player_one.current_room.get_room_items()
+
+
+
+
                 
             elif player_one.current_room.n_to is not None and item_randomizer == hammer_item:
-                player_one.current_room = player_one.current_room.n_to
-                room['foyer'].items.append(room['outside'].items[2].item_name)
-                print('The array list:', room['foyer'].items[0:])
+                if 'hammer' not in player_one.player_items:
+                    player_one.current_room = player_one.current_room.n_to
+                    # Append the chosen weapon to the player items array
+                    player_one.player_items.append(hammer_item.item_name)
+                    
+                    # Get a list of any weapons hidden in the current room
+                    player_one.current_room.get_room_items()
+                
+                elif 'hammer' in player_one.player_items:
+                    player_one.current_room = player_one.current_room.n_to
+                    player_one.current_room.get_room_items()
 
-            # elif player_one.current_room.n_to == room['overlook'] and item_randomizer == sword_item and len(room['foyer'].items) == 1:
-            #         room['foyer'].items.remove(room['outside'].items[1].item_name)
-            #         print('Current foyer array list:', room['foyer'].items[0:])
-            #         print('current room array list:', player_one.current_room.items[0:])
+
+
+
+            elif player_one.current_room.n_to == room['overlook'] and item_randomizer == sword_item and len(room['foyer'].items) == 1:
+                    room['foyer'].items.remove(room['outside'].items[1].item_name)
+                    print('Current foyer array list:', room['foyer'].items[0:])
+                    print('current room array list:', player_one.current_room.items[0:])
                 
             else:
                 print('You cannot move in that direction!')
             
-            # if player_one.current_room.n_to == room['overlook'] and item_randomizer == sword_item and len(room['foyer'].items) == 1:
-            #         room['foyer'].items.remove(room['outside'].items[1].item_name)
-            #         print('Current foyer array list:', room['foyer'].items[0:])
-            #         print('current room array list:', player_one.current_room.items[0:])
+          
                 
             player_one.get_inventory()
                         
@@ -173,6 +213,10 @@ while True:
                 player_one.current_room = player_one.current_room.w_to
             else:
                 print('You cannot move in that direction!')
+
+            
+            player_one.get_inventory()
+            
                 
     elif player_input == 'q':
         print('Goodbye')
