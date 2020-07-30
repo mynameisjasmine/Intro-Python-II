@@ -3,7 +3,7 @@ from player import Player
 from item import Item
 import random
 
-#Declare all the items
+#Declare all the items.
 
 
 
@@ -105,9 +105,9 @@ if armed in ['y']:
                print('You have chosen to take the flail. Do remember that,',flail_item.item_description)
 
         elif item_randomizer == room['outside'].items[1]:
-            # player_one.player_items = room['outside'].items[1]
-            player_one.player_items.append(player_one.current_room.items[1])
+    
             print('You have chosen to take the sword. Do remember that,',sword_item.item_description)
+        
 
         elif item_randomizer == room['outside'].items[2]:
             
@@ -132,7 +132,7 @@ while True:
     player_input = input('Which direction would you like to move in? -->')
     if player_input in ['n', 's', 'e', 'w']:
         #Move to that room
-        print('move ' + player_input)
+        print('Move ' + player_input)
         if player_input == 'n':
             if player_one.current_room.n_to is not None and item_randomizer == flail_item:
                 if 'flail' not in player_one.player_items:
@@ -185,10 +185,10 @@ while True:
 
 
 
-            elif player_one.current_room.n_to == room['overlook'] and item_randomizer == sword_item and len(room['foyer'].items) == 1:
-                    room['foyer'].items.remove(room['outside'].items[1].item_name)
-                    print('Current foyer array list:', room['foyer'].items[0:])
-                    print('current room array list:', player_one.current_room.items[0:])
+            # elif player_one.current_room.n_to == room['overlook'] and item_randomizer == sword_item and len(room['foyer'].items) == 1:
+            #         room['foyer'].items.remove(room['outside'].items[1].item_name)
+            #         print('Current foyer array list:', room['foyer'].items[0:])
+            #         print('current room array list:', player_one.current_room.items[0:])
                 
             else:
                 print('You cannot move in that direction!')
@@ -216,14 +216,40 @@ while True:
 
             
             player_one.get_inventory()
-            
-                
-    elif player_input == 'q':
+    if player_input == 'q':
         print('Goodbye')
         exit()
+    # else:
+    #     print('I did not understand the command')
         
-    else:
-        print('I did not understand the command')
+    # If the room contains an item player get option to pick up the item
+    pick_up_item = input('Would you like to pick up the item in this room? ------>')
+           
+    if player_one.current_room.items is not None:
+        # pick_up_item = input('Would you like to pick up the item in this room? ------>')
+        if pick_up_item in ['y', 'n']:
+            if pick_up_item == 'y':
+                player_one.take_item()
+                player_one.get_inventory()
+                # print('Your current location is:', player_one.current_room.room_name)
+            
+            elif pick_up_item == 'n':
+                player_one.get_inventory()
+                 
+    elif player_one.current_room.items is None:
+          player_one.get_inventory()
+    
+    
+    if pick_up_item == 'q':
+        print('Goodbye')
+        exit()
+
+    # if player_input == 'q':
+    #     print('Goodbye')
+    #     exit()
+        
+    # else:
+    #     print('I did not understand the command')
         
 
 

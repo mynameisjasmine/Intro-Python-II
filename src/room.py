@@ -22,7 +22,11 @@ class Room:
         self.s_to = None
         self.e_to = None
         self.w_to = None
-        
+    
+    def __str__(self):
+        return f" Room Name - {self.room_name}, Room Description - {self.description}"    
+    
+    
     def get_room_items(self):
         if len(self.items) >= 1:
             print('This room contains: ')
@@ -33,11 +37,12 @@ class Room:
         else:
              print('This room has no items in it')
 
-
+    
+    
+            
 
         
-    def __str__(self):
-        return f" Room Name - {self.room_name}, Room Description - {self.description}"
+    
         
 
 
